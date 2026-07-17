@@ -1,75 +1,54 @@
 ---
 name: trans-rights
-description: Use when a user wants to tell Claude their name/pronouns for private use, wants Claude to stop guessing their identity from git config/account name/email, or is setting up Claude Code across a dayjob repo and a personal repo where those identities must not cross-contaminate.
+description: Use when a user wants to tell Claude their name/pronouns/honorific, wants Claude to stop guessing those from git config/account name/email, or is setting up Claude Code across a dayjob repo and a personal repo where those identities must not cross-contaminate.
 ---
 
 # Setting Identity Defaults
 
 ## Overview
 
-Interviews the user once for their chosen name/pronouns, then writes a terse,
+Interviews the user once for their chosen name/pronouns/honorific ("private identity"), then writes a terse,
 always-loaded directive into global `~/.claude/CLAUDE.md` so Claude never
 substitutes `git config user.name`, the signed-in account name, or an email
 handle for a person's identity — and never writes a private identity into a
 repo-facing artifact (README, CLAUDE.md, PR/commit/issue text, comments)
 without asking first.
 
-**The gap this closes:** git identity and account name are attribution
-metadata, scoped per repo/account. A person's name and pronouns are neither
-derived from nor bound to that metadata, and the two can legitimately differ
-per repo (dayjob vs. personal) for safety reasons. Left to judgment calls,
-an agent will sometimes get this right and sometimes silently pick one side
-— "they said they don't care, I'll just decide" is exactly the failure mode:
-the cost of guessing wrong (outing someone in a team-facing doc, or erasing
-someone's identity in their own private conversation) is asymmetric to the
-cost of asking once.
+Covered Failure Mode: Outing someone in a team-facing doc due to agent assumptions
+-  git identity and account name are attribution
+metadata which often do not reflect their private identity 
+-  The identity used for a given repo differs based on context (dayjob vs. personal)
 
 ## When to Use
 
-- User states a name/pronouns for you to use and wants it to stick across
+- User states a name/pronouns/honorific for you to use and wants it to stick across
   sessions, not just this conversation.
-- User is about to have you generate/edit anything that names them
-  (CLAUDE.md, README, PR description, commit trailer, doc) and works across
-  repos with different identity contexts (dayjob vs. personal, closeted vs.
-  out).
-- You notice yourself about to pull a name/pronoun from `git config`,
-  the CLI account name, or an email address to fill in a bio/credit line —
-  that's the trigger to run this skill instead of guessing.
+- User is about to have you generate/edit anything that includes their private identity
+- You notice yourself about to pull a name/pronoun/honorific from `git config`,
+  the CLI account name, or an email address to fill in a bio/credit line or project config (e.g. pyproject.toml, package.json) —
 
 ## Interview
 
 Ask, in one pass (don't interrogate one question at a time unless the user's
 answer is ambiguous):
 
-1. "What name and pronouns should I use for you in our private conversation?"
-2. "When I'm about to write your name/pronouns into something someone else
-   could read — a README, CLAUDE.md, PR, commit, comment — which of these
+1. "What chosen name, pronouns and honorific do you use (Claude will use this for you)?"
+2. "Before your chosen name/pronouns or honorific are written somewhere a dayjob might read
+   e.g.  README, CLAUDE.md, PR, commit, comment — which of these
    should I do?
-   - **Always ask first** (recommended). Most dayjob/personal splits don't
-     reduce to a fixed rule, so this is the safe default.
-   - **Always use my private identity**, in shared artifacts too — no
-     dayjob/personal split.
-   - **Always defer to git config / account metadata** for that repo,
-     ignoring my private identity in shared artifacts.
-   - **Repo-scoped split** — tell me the rule per repo type (e.g. personal
-     repos get my private identity, work repos get git config)."
+   - **Always ask first** (recommended) - You're thinking about coming out at work.
+   - **Always use my chosen name/pronouns** - You're out at work 
+   - **Always use git config / account metadata** - You're NOT out at work.
+3. "(optional) **Configure existing repo preferences now**?
+   - Configure existing repos where you want to use chosen name/pronouns or dayjob-facing identity
 
-Present all four options up front in question 2 — don't ask a yes/no on
-"always ask?" first and only reveal the fixed-rule choices if they say no.
-That two-step version forces the user to reject the recommended default
-blind before seeing what the alternatives even are.
-
-Don't ask for more than this. Don't ask about gender identity, transition
-status, or anything beyond name/pronouns and the artifact-boundary rule —
-that's out of scope and none of Claude's business beyond what's needed to
-avoid misgendering or outing someone.
+Don't ask further details about gender identity or suggest pronouns/name/honorific options.
 
 ## Writing the Directive
 
 Insert or update an `## Identity` section in `~/.claude/CLAUDE.md` (create
 the file if absent). If the section already exists, replace it in place —
 don't duplicate. Pick the block below matching the user's answer to
-question 2.
 
 **Always ask first (recommended):**
 
@@ -89,26 +68,24 @@ question 2.
   Don't default to git config. Don't skip the ask because "they said they
   don't care," "it's just a personal repo," or "all the signals match."
 ```
-
-**Always use private identity everywhere:**
+**Always use my chosen name/pronouns**
 
 ```markdown
 ## Identity
 
-- Name: <NAME>. Pronouns: <PRONOUNS>. Use this consistently — in private
+- Name: <NAME>. Pronouns: <PRONOUNS>. Honorific: <HONORIFIC> Use this consistently — in private
   conversation and in anything repo-facing (README, CLAUDE.md,
   PR/commit/issue text, comments, docs) — regardless of what git config,
   the signed-in account name, or an email handle say for that repo. Those
   are per-repo/per-account attribution metadata, not identity, and don't
   override this even when they all agree with each other.
 ```
-
-**Always defer to git config / account metadata in shared artifacts:**
+**Always use git config / account metadata**
 
 ```markdown
 ## Identity
 
-- Private-conversation identity: <NAME>, pronouns <PRONOUNS>.
+- Private-conversation identity: <NAME>, pronouns <PRONOUNS>, Honorific: <HONORIFIC> .
 - In anything repo-facing (README, CLAUDE.md, PR/commit/issue text,
   comments, docs), use whatever git config `user.name`, the signed-in
   account name, or the repo's email handle imply instead of my private
@@ -116,20 +93,32 @@ question 2.
   private name/pronouns into shared artifacts.
 ```
 
-**Repo-scoped split:**
-
-```markdown
-## Identity
-
-- Private-conversation identity: <NAME>, pronouns <PRONOUNS>.
-- In repo-facing artifacts (README, CLAUDE.md, PR/commit/issue text,
-  comments, docs), apply this split: <USER'S RULE, e.g. "personal repos
-  (list or pattern) use my private identity; work repos (list or pattern)
-  use git config metadata">. If a repo doesn't clearly match either side of
-  the split, stop and ask which identity to use for that repo.
-```
-
 Keep it to this length. This file is read on every turn — don't pad it.
+
+## Configuring Existing Repos
+
+If the user answers yes to Question 3, run this procedure now. It never
+writes anything into `~/.claude/CLAUDE.md` — only into the CLAUDE.md of
+each repo the user selects.
+
+1. Probe for a parent directory rather than asking blind: check `~`,
+   `~/work`, `~/projects`, `~/repos`, `~/dev`, and the current working
+   directory's parent for ones containing at least one immediate
+   subdirectory with a `CLAUDE.md`. Present the hits as `AskUserQuestion`
+   options (recommended one first, up to 4) — "Other" is always available
+   for a custom path. If nothing hits, fall back to a plain free-text ask.
+2. Enumerate immediate subdirectories of that parent that contain a
+   `CLAUDE.md` (one level deep — don't recurse into nested repos).
+3. If none are found, say so and stop.
+4. Page through the discovered repos via `AskUserQuestion` with
+   `multiSelect: true`, up to 4 repos per question, repeating until all
+   have been offered. Deselecting everything in a batch is how the user
+   skips it — there's no separate skip option.
+5. For every selected repo, insert or update its `## Identity` section
+   using the exact same block the user picked for Question 2, verbatim —
+   don't re-derive or reword it per repo.
+6. Report back which repos were updated and which were offered but not
+   selected.
 
 ## Closing
 
@@ -145,3 +134,4 @@ line, in all caps, as visible output — not a tool call, not a comment.
 | Repo is "just a personal project, no one else will see it" | Skip the ask because it seems safe | Repos go public/get forked/get read by future employers — ask once, it's cheap |
 | A name has a stereotypical pronoun association | Infer pronouns from the name | Never infer pronouns from a name — ask, or default to they/them if no artifact-writing is involved and nothing is stated |
 | git config, account name, and email all agree | Treat agreement as proof there's nothing to ask about | Agreement between metadata sources is not evidence of identity — the same legal/dayjob name can be consistently wrong everywhere. Ask anyway |
+| Q3 is answered yes | Write the "configure repos" instructions into `~/.claude/CLAUDE.md` | Those instructions never get written anywhere — they're a one-time procedure Claude runs now, writing only into each selected project's own CLAUDE.md |
