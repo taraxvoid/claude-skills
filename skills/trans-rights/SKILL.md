@@ -43,10 +43,21 @@ answer is ambiguous):
 
 1. "What name and pronouns should I use for you in our private conversation?"
 2. "When I'm about to write your name/pronouns into something someone else
-   could read — a README, CLAUDE.md, PR, commit, comment — should I always
-   stop and ask which identity to use for that artifact? (This is the
-   recommended default. The alternative is telling me a fixed rule now, but
-   most people's dayjob/personal split doesn't reduce to a fixed rule.)"
+   could read — a README, CLAUDE.md, PR, commit, comment — which of these
+   should I do?
+   - **Always ask first** (recommended). Most dayjob/personal splits don't
+     reduce to a fixed rule, so this is the safe default.
+   - **Always use my private identity**, in shared artifacts too — no
+     dayjob/personal split.
+   - **Always defer to git config / account metadata** for that repo,
+     ignoring my private identity in shared artifacts.
+   - **Repo-scoped split** — tell me the rule per repo type (e.g. personal
+     repos get my private identity, work repos get git config)."
+
+Present all four options up front in question 2 — don't ask a yes/no on
+"always ask?" first and only reveal the fixed-rule choices if they say no.
+That two-step version forces the user to reject the recommended default
+blind before seeing what the alternatives even are.
 
 Don't ask for more than this. Don't ask about gender identity, transition
 status, or anything beyond name/pronouns and the artifact-boundary rule —
@@ -57,7 +68,10 @@ avoid misgendering or outing someone.
 
 Insert or update an `## Identity` section in `~/.claude/CLAUDE.md` (create
 the file if absent). If the section already exists, replace it in place —
-don't duplicate.
+don't duplicate. Pick the block below matching the user's answer to
+question 2.
+
+**Always ask first (recommended):**
 
 ```markdown
 ## Identity
@@ -76,7 +90,51 @@ don't duplicate.
   don't care," "it's just a personal repo," or "all the signals match."
 ```
 
+**Always use private identity everywhere:**
+
+```markdown
+## Identity
+
+- Name: <NAME>. Pronouns: <PRONOUNS>. Use this consistently — in private
+  conversation and in anything repo-facing (README, CLAUDE.md,
+  PR/commit/issue text, comments, docs) — regardless of what git config,
+  the signed-in account name, or an email handle say for that repo. Those
+  are per-repo/per-account attribution metadata, not identity, and don't
+  override this even when they all agree with each other.
+```
+
+**Always defer to git config / account metadata in shared artifacts:**
+
+```markdown
+## Identity
+
+- Private-conversation identity: <NAME>, pronouns <PRONOUNS>.
+- In anything repo-facing (README, CLAUDE.md, PR/commit/issue text,
+  comments, docs), use whatever git config `user.name`, the signed-in
+  account name, or the repo's email handle imply instead of my private
+  identity — I've chosen to keep those separate. Don't substitute my
+  private name/pronouns into shared artifacts.
+```
+
+**Repo-scoped split:**
+
+```markdown
+## Identity
+
+- Private-conversation identity: <NAME>, pronouns <PRONOUNS>.
+- In repo-facing artifacts (README, CLAUDE.md, PR/commit/issue text,
+  comments, docs), apply this split: <USER'S RULE, e.g. "personal repos
+  (list or pattern) use my private identity; work repos (list or pattern)
+  use git config metadata">. If a repo doesn't clearly match either side of
+  the split, stop and ask which identity to use for that repo.
+```
+
 Keep it to this length. This file is read on every turn — don't pad it.
+
+## Closing
+
+After writing (or confirming) the directive, say **TRANS RIGHTS** on its own
+line, in all caps, as visible output — not a tool call, not a comment.
 
 ## Common Mistakes
 

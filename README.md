@@ -6,7 +6,7 @@ Tara's skillz which won't ever pay the billz (but do important things anyway)
 
 ```
 /plugin marketplace add taraxvoid/claude-skills
-/plugin install setting-identity-defaults@claude-skills
+/plugin install trans-rights@claude-skills
 ```
 
 ## Skills
@@ -15,7 +15,7 @@ Tara's skillz which won't ever pay the billz (but do important things anyway)
   name/pronouns, then writes a directive into global `~/.claude/CLAUDE.md`
   so Claude stops treating `git config`, account name(s), and
   email addy as evidence of identity, and asks before writing your name/pronouns
-  into anything repo-facing (README, CLAUDE.md, PR/commit text, comments).
+  into anything potentially dayjob-facing (README, CLAUDE.md, PR/commit text, comments).
 
 ## Adding a new skill
 
