@@ -1,6 +1,6 @@
 ---
-name: setting-identity-defaults
-description: Use when a user wants to tell Claude their name/pronouns for private use, wants Claude to stop guessing identity from git config/account name/email, or is setting up Claude Code across a dayjob repo and a personal repo where those identities must not cross-contaminate.
+name: trans-rights
+description: Use when a user wants to tell Claude their name/pronouns for private use, wants Claude to stop guessing their identity from git config/account name/email, or is setting up Claude Code across a dayjob repo and a personal repo where those identities must not cross-contaminate.
 ---
 
 # Setting Identity Defaults
@@ -35,10 +35,6 @@ cost of asking once.
 - You notice yourself about to pull a name/pronoun from `git config`,
   the CLI account name, or an email address to fill in a bio/credit line —
   that's the trigger to run this skill instead of guessing.
-
-**Not for:** general product/UX copy about gender-expansive users — that's a
-different concern (see `valueprop-guard` / the business-facing skill this one
-hooks into, once that exists).
 
 ## Interview
 

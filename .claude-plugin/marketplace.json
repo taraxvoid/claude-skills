@@ -1,13 +1,13 @@
 {
   "$schema": "https://code.claude.com/schemas/marketplace.json",
   "name": "claude-skills",
-  "description": "Tara's personal Claude Code skills, dogfooded here before going anywhere public.",
+  "description": "Tara's personal Claude Code skills for cool stuff",
   "owner": { "name": "Tara" },
   "plugins": [
     {
-      "name": "setting-identity-defaults",
-      "source": "./skills/setting-identity-defaults",
-      "description": "Interview + writer for a global CLAUDE.md identity directive: stop guessing name/pronouns from git config/account/email, ask before writing them into repo-facing artifacts."
+      "name": "trans-rights",
+      "source": "./skills/trans-rights",
+      "description": "Interview + writer for a global CLAUDE.md identity directive: stop guessing name/pronouns from git config/account/email, ask before writing them into potentially dayjob-facing artifacts."
     }
   ]
 }
