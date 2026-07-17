@@ -1,0 +1,12 @@
+{
+  "$schema": "https://code.claude.com/schemas/marketplace.json",
+  "name": "claude-skills",
+  "owner": { "name": "Tara" },
+  "plugins": [
+    {
+      "name": "setting-identity-defaults",
+      "source": "./skills/setting-identity-defaults",
+      "description": "Interview + writer for a global CLAUDE.md identity directive: stop guessing name/pronouns from git config/account/email, ask before writing them into repo-facing artifacts."
+    }
+  ]
+}

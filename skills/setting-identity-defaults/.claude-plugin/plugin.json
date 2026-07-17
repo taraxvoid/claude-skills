@@ -1,0 +1,7 @@
+{
+  "name": "setting-identity-defaults",
+  "description": "Set your name/pronouns once; Claude stops inferring identity from git config/account/email and asks before writing it into anything repo-facing.",
+  "version": "1.0.0",
+  "author": { "name": "Tara" },
+  "license": "MIT"
+}
