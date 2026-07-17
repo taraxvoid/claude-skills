@@ -7,6 +7,7 @@ Tara's skillz which won't ever pay the billz (but do important things anyway)
 ```
 /plugin marketplace add taraxvoid/claude-skills
 /plugin install trans-rights@claude-skills
+/plugin install transwrongs@claude-skills
 ```
 
 ## Skills
@@ -16,6 +17,11 @@ Tara's skillz which won't ever pay the billz (but do important things anyway)
   so Claude stops treating `git config`, account name(s), and
   email addy as evidence of identity, and asks before writing your name/pronouns
   into anything potentially dayjob-facing (README, CLAUDE.md, PR/commit text, comments).
+- **transwrongs** — flags forms/copy that force a binary/assumed gender,
+  ask about sexuality gratuitously, assume a relationship structure, or
+  collect a legal-only name with no display-name option. Runs either as a
+  one-time full-repo audit (a standalone report) or as part of a PR/diff-time
+  code review.
 
 ## Adding a new skill
 
