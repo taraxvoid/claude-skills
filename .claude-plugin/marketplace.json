@@ -1,6 +1,6 @@
 {
   "$schema": "https://code.claude.com/schemas/marketplace.json",
-  "name": "claude-skills",
+  "name": "taraxvoid-skills",
   "description": "Tara's personal Claude Code skills for cool stuff",
   "owner": { "name": "Tara" },
   "plugins": [

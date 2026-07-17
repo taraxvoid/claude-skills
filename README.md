@@ -6,8 +6,8 @@ Tara's skillz which won't ever pay the billz (but do important things anyway)
 
 ```
 /plugin marketplace add taraxvoid/claude-skills
-/plugin install trans-rights@claude-skills
-/plugin install transwrongs@claude-skills
+/plugin install trans-rights@taraxvoid-skills
+/plugin install transwrongs@taraxvoid-skills
 ```
 
 ## Skills
